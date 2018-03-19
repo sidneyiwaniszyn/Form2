@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Web Form</title>
+        <link rel='stylesheet' type='text/css' href='stylesheet.css'/>
+        <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    </head>
+<body>
+    <?php
+    echo "<pre>", print_r($_POST,true),"<pre>";
+    
+
+          if(isset($_POST['submit'])) {
+            $usernamesignup = filter_var($_POST['usernamesignup'], FILTER_SANITIZE_STRING);
+            $emailsignup = filter_var($_POST['emailsignup'], FILTER_SANITIZE_STRING);
+            $passwordsignup = filter_var($_POST['passwordsignup'], FILTER_SANITIZE_STRING);
+            $passwordsignupconfirm = filter_var($_POST['passwordsignupconfirmed'], FILTER_SANITIZE_STRING);
+            
+            $to = 'sidney_iwaniszyn@emerson.edu';
+            $subject = 'It Worked Bitch!!';
+            $message = "Hey hoe, you did it.\n\n"
+                        ."$usernamesignup\n"
+                        ."TBH I never thought you'd do it\n";
+            
+            $result = mail($to,$subject,$message);
+            
+              //Connect to Database 
+              $hostname = 'localhost';
+              $username = 'sidneyiw_siwanis';
+                $password ='728Horsefoust';
+                $database = 'sidneyiw_useform';
+              
+              $mysqli = new mysqli($dbhostname,$dbusername,$dbpassword,$dbdatabase);
+                if($mysqli->connect_errno) {
+                    echo "<p>MySQL Error" . $mysqli->error;
+                }
+              else {
+                  echo 'database connection success!';
+              }
+      
+                $username = $mysql->reak_escape_string(username);
+                $email =$mysql->reak_escape_string(username);
+                $password = password_hash($passwordm PASSWORD_DEFAULT);
+          
+              // Insert data into database
+ 
+              $query = "INSERT INTO `account` (`accountid`, `username`, `password`, `email`)"
+ . "VALUES (NULL, '$username', '$password', '$email')";
+
+        if ($mysqli->query($query)) {
+        echo '<p>Insert data success!!!</p>';
+    } else {
+    echo '<p>Insert Error ' . $mysqli->error . '</p>';
+    }
+    }
+          
+          
+    ?>
+
+
+		<div id="register" class="animate form">
+			<form  method="post"> 
+				<h1> Sign up </h1> 
+				<p> 
+					<label for="usernamesignup" class="uname" data-icon="u">Your username</label>
+					<input id="usernamesignup" name="usernamesignup" required="required" type="text" placeholder="username" />
+				</p>
+				<p> 
+					<label for="emailsignup" class="youmail" data-icon="e" > Your email</label>
+					<input id="emailsignup" name="emailsignup" required="required" type="email" placeholder="email"/> 
+				</p>
+				<p> 
+					<label for="passwordsignup" class="youpasswd" data-icon="p">Your password </label>
+					<input id="passwordsignup" name="passwordsignup" required="required" type="password" placeholder="password"/>
+				</p>
+				<p> 
+					<label for="passwordsignupconfirm" class="youpasswd" data-icon="p">Please confirm your password </label>
+					<input id="passwordsignupconfirm" name="passwordsignupconfirm" required="required" type="password" placeholder="re-type password"/>
+				</p>
+				<p class="signin button"> 
+					<input type="submit" name="submit" value="submit"/> 
+				</p>
+				<p class="change_link">  
+				</p>
+			</form>
+		</div>
+		
+    </body>
+</html>
